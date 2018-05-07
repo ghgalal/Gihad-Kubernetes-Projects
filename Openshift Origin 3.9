@@ -1,1 +1,16 @@
-#Openshift Origin 
+# Installation problems that I faced while installing OCP Origin on GCP Compute Engine
+
+# Problem 1: SSH issues
+I faced the following error whenever I tried to SSH from one VM instance to another
+debug1: Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mic,password
+
+
+SSH is required for the installation to work, so I did the following
+I had one user on each machine so the steps will be different if there is a different user for each machine, but at least for the account that I used on the master, I did the following:
+
+- I ran the following command to generate a new key for the logged in user. That command will generate a key in the default location ~/.ssh/id_rsa.pub and ~/.ssh/id_rsa
+ssh-keygen
+
+- cat ~/.ssh/id_rsa.pub and copy the who key 
+
+- Go to the other VMs on GCP console and edit and add the SSH key to the instance metadata. You can also follow the instructions on GCP documentation if you want to use gcloud CLI (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys)
